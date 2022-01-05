@@ -7,7 +7,7 @@
     <div class="col-sm-4">
       <div class="page-header float-left">
         <div class="page-title">
-          <h1>Data Project</h1>
+          <h1>Attendance Category</h1>
         </div>
       </div>
     </div>
@@ -15,7 +15,6 @@
       <div class="page-header float-right">
         <div class="page-title">
           <ol class="breadcrumb text-right">
-
             <li class="active"><i class="fa fa-dashboard"></i></li>
           </ol>
         </div>
@@ -27,21 +26,19 @@
 @section('content')
   <div class="content mt-3">
     <div class="animated fadeIn">
-
       @if (session('status'))
         <div class="alert alert-success">
           {{ session('status') }}
         </div>
       @endif
-
       <div class="card">
         <div class="card-header">
           <div class="pull-left">
-            <strong>Data Project</strong>
+            <strong>Data Attendance Categories</strong>
           </div>
           <div class="pull-right">
-            <a href="{{ url('projects/add') }}" class="btn btn-success btnsm">
-              <i class="fa fa-plus"></i>Add
+            <a href="{{ url('att_categories/add') }}" class="btn btn-success btn-sm">
+              <i class="fa fa-plus"></i> Add
             </a>
           </div>
         </div>
@@ -49,42 +46,37 @@
           <table id="bootstrap-data-table" class="table table-striped table-bordered">
             <thead>
               <tr>
-                <th>No</th>
-                <th>Code Project</th>
-                <th>Name Project</th>
-                <th>Action</th>
+                <th width="5%">No</th>
+                <th>Code</th>
+                <th>Remarks</th>
+                <th width="10%" class="text-center">Action</th>
               </tr>
             </thead>
             <tbody>
-              @foreach ($projects as $item)
+              @foreach ($attendanceCategories as $item)
                 <tr>
                   <td>{{ $loop->iteration }}</td>
-                  <td>{{ $item->code_project }}</td>
-                  <td>{{ $item->name_project }}</td>
+                  <td>{{ $item->code }}</td>
+                  <td>{{ $item->remarks }}</td>
                   <td class="text-center">
-                    <a href="{{ url('projects/edit/' . $item->id) }}" class="btn btn-primary btn-sm">
+                    <a href="{{ url('att_categories/edit/' . $item->id) }}" class="btn btn-primary btn-sm">
                       <i class="fa fa-pencil"></i>
                     </a>
-                    <form action="{{ url('projects/' . $item->id) }}" method="post"
+                    <form action="{{ url('att_categories/' . $item->id) }}" method="post"
                       onsubmit="return confirm('Are you sure want to delete this data?')" class="d-inline">
                       @method('delete')
                       @csrf
                       <button class="btn btn-danger btn-sm">
                         <i class="fa fa-trash"></i>
                       </button>
-
                     </form>
-
                   </td>
                 </tr>
               @endforeach
             </tbody>
-
           </table>
         </div>
       </div>
-
-
     </div>
   </div>
 @endsection
