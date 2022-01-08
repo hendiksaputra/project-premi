@@ -7,7 +7,7 @@
     <div class="col-sm-4">
       <div class="page-header float-left">
         <div class="page-title">
-          <h1>Warning Category (Kategori SP)</h1>
+          <h1>Warning Category (SP)</h1>
         </div>
       </div>
     </div>
@@ -33,7 +33,7 @@
             <strong>Edit Warning Category</strong>
           </div>
           <div class="pull-right">
-            <a href="{{ url('sp_categories') }}" class="btn btn-success btn-sm">
+            <a href="{{ url('warning_categories') }}" class="btn btn-success btn-sm">
               <i class="fa fa-undo"></i> Back
             </a>
           </div>
@@ -41,12 +41,13 @@
         <div class="card-body">
           <div class="row">
             <div class="col-md-4 offset-md-4">
-              <form action="{{ url('sp_categories') }}" method="post">
+              <form action="{{ url('warning_categories/' . $warningCategories->id) }}" method="post">
+                @method('patch')
                 @csrf
                 <div class="form-group">
                   <label for="">Name</label>
                   <input type="text" name="sp_name" class="form-control @error('sp_name') is-invalid @enderror"
-                    value="{{ old('sp_name', $spCategories->sp_name) }}" autofocus>
+                    value="{{ old('sp_name', $warningCategories->sp_name) }}" autofocus>
                   @error('sp_name')
                     <div class="has-warning form-group">{{ $message }}</div>
                   @enderror
@@ -54,7 +55,7 @@
                 <div class=" form-group">
                   <label for="">Index</label>
                   <input type="text" name="sp_index" class="form-control @error('sp_index') is-invalid @enderror"
-                    value="{{ old('sp_index', $spCategories->sp_index) }}" autofocus>
+                    value="{{ old('sp_index', $warningCategories->sp_index) }}" autofocus>
                   @error('sp_index')
                     <div class="has-warning form-group">{{ $message }}</div>
                   @enderror

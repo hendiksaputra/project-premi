@@ -7,7 +7,7 @@
     <div class="col-sm-4">
       <div class="page-header float-left">
         <div class="page-title">
-          <h1>Warning Category (Kategori SP)</h1>
+          <h1>Warning Category (SP)</h1>
         </div>
       </div>
     </div>
@@ -33,7 +33,7 @@
             <strong>Add Warning Category</strong>
           </div>
           <div class="pull-right">
-            <a href="{{ url('sp_categories') }}" class="btn btn-success btn-sm">
+            <a href="{{ url('warning_categories') }}" class="btn btn-success btn-sm">
               <i class="fa fa-undo"></i> Back
             </a>
           </div>
@@ -41,7 +41,7 @@
         <div class="card-body">
           <div class="row">
             <div class="col-md-4 offset-md-4">
-              <form action="{{ url('sp_categories') }}" method="post">
+              <form action="{{ url('warning_categories') }}" method="post">
                 @csrf
                 <div class="form-group">
                   <label for="">Name</label>

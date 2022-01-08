@@ -37,7 +37,7 @@
             <strong>Data Warning Categories</strong>
           </div>
           <div class="pull-right">
-            <a href="{{ url('sp_categories/add') }}" class="btn btn-success btn-sm">
+            <a href="{{ url('warning_categories/add') }}" class="btn btn-success btn-sm">
               <i class="fa fa-plus"></i> Add
             </a>
           </div>
@@ -53,16 +53,16 @@
               </tr>
             </thead>
             <tbody>
-              @foreach ($spCategories as $item)
+              @foreach ($warningCategories as $item)
                 <tr>
                   <td>{{ $loop->iteration }}</td>
                   <td>{{ $item->sp_name }}</td>
                   <td>{{ $item->sp_index }}</td>
                   <td class="text-center">
-                    <a href="{{ url('sp_categories/edit/' . $item->id) }}" class="btn btn-primary btn-sm">
+                    <a href="{{ url('warning_categories/edit/' . $item->id) }}" class="btn btn-primary btn-sm">
                       <i class="fa fa-pencil"></i>
                     </a>
-                    <form action="{{ url('sp_categories/' . $item->id) }}" method="post"
+                    <form action="{{ url('warning_categories/' . $item->id) }}" method="post"
                       onsubmit="return confirm('Are you sure want to delete this data?')" class="d-inline">
                       @method('delete')
                       @csrf

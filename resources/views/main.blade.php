@@ -16,10 +16,8 @@
   <link rel="stylesheet" href="{{ asset('style/assets/css/cs-skin-elastic.css') }}">
   <link rel="stylesheet" href="{{ asset('style/assets/scss/style.css') }}">
   <link rel="stylesheet" href="{{ asset('style/assets/css/lib/datatable/dataTables.bootstrap.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('style/assets/css/lib/chosen/chosen.min.css') }}">
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
-
-
-
 </head>
 
 <body>
@@ -39,12 +37,15 @@
       <div id="main-menu" class="main-menu collapse navbar-collapse">
         <ul class="nav navbar-nav">
           <li>
-            <a href="{{ url('home') }}"> <i class="menu-icon fa fa-dashboard"></i>Home </a>
+            <a href="{{ url('home') }}"> <i class="menu-icon fa fa-dashboard"></i>Dashboard </a>
+          </li>
+          <li>
+            <a href="{{ url('warning') }}"> <i class="menu-icon fa fa-warning"></i>Warning (SP)</a>
           </li>
 
           <h3 class="menu-title">Master Data</h3><!-- /.menu-title -->
           <li>
-            <a href="{{ url('projects') }}"> <i class="menu-icon fa fa-dashboard"></i>Project</a>
+            <a href="{{ url('projects') }}"> <i class="menu-icon fa fa-building"></i>Project</a>
           </li>
 
           <li class="menu-item-has-children dropdown">
@@ -54,7 +55,8 @@
               <li><i class="menu-icon fa fa-tags"></i><a href="{{ url('att_categories') }}">Attendance
                   Category</a>
               </li>
-              <li><i class="menu-icon fa fa-tags"></i><a href="{{ url('sp_categories') }}">Warning Category</a></li>
+              <li><i class="menu-icon fa fa-tags"></i><a href="{{ url('warning_categories') }}">Warning Category</a>
+              </li>
             </ul>
           </li>
         </ul>
@@ -155,11 +157,20 @@
   <script src="{{ asset('style/assets/js/lib/data-table/buttons.print.min.js') }}"></script>
   <script src="{{ asset('style/assets/js/lib/data-table/buttons.colVis.min.js') }}"></script>
   <script src="{{ asset('style/assets/js/lib/data-table/datatables-init.js') }}"></script>
-
+  <script src="{{ asset('style/assets/js/lib/chosen/chosen.jquery.min.js') }}"></script>
 
   <script type="text/javascript">
     $(document).ready(function() {
       $('#bootstrap-data-table-export').DataTable();
+    });
+  </script>
+  <script>
+    jQuery(document).ready(function() {
+      jQuery(".standardSelect").chosen({
+        // disable_search_threshold: 10,
+        no_results_text: "Oops, nothing found!",
+        width: "100%"
+      });
     });
   </script>
 
