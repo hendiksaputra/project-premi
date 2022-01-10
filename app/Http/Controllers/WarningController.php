@@ -6,6 +6,7 @@ use App\Models\Warning;
 use App\Models\WarningCategory;
 use App\Models\Employee;
 use Illuminate\Http\Request;
+use Yajra\Datatables\Datatables;
 
 class WarningController extends Controller
 {
@@ -20,14 +21,20 @@ class WarningController extends Controller
         // $warnings = Warning::all();
 
         // cara menampilkan semua data dengan urutan tertentu
-        $warnings = Warning::with('employee.project')->orderBy('id','desc')->get();
+        // $warnings = Warning::with('employee.project')->orderBy('id','desc')->paginate(5)->withQueryString();
+        $warnings = Warning::with('employee.project')->latest()->get();
         
         // cara menampilkan semua data termasuk yang soft deleted
         // $warnings = Warning::withTrashed()->with('employee.project')->orderBy('id','desc')->get();
 
         // return $warnings;
-        return view('warning.index', compact('warnings'));
+        return view('warnings.index', compact('warnings'));
     }
+
+    public function anyData()
+{
+    return Datatables::of(Warning::query())->make(true);
+}
 
     /**
      * Show the form for creating a new resource.
@@ -38,7 +45,7 @@ class WarningController extends Controller
     {
         $employees = Employee::with('project')->orderBy('nik','asc')->get();
         $warning_categories = WarningCategory::orderBy('sp_name','asc')->get();
-        return view('warning.add', compact('employees', 'warning_categories'));
+        return view('warnings.add', compact('employees', 'warning_categories'));
     }
 
     /**
@@ -85,7 +92,7 @@ class WarningController extends Controller
         // ]); -- data umum
         // $warning->sp_date = $request->sp_date; -- data khusus yang di $guarded di model
 
-        return redirect('warning')->with('status', 'Warning added successfully');
+        return redirect('warnings')->with('status', 'Warning added successfully');
     }
 
     /**
@@ -97,7 +104,7 @@ class WarningController extends Controller
     public function show(Warning $warning)
     {
         $warning->makeHidden(['created_at', 'updated_at']);
-        return view('warning.show', compact('warning'));
+        return view('warnings.show', compact('warning'));
     }
 
     /**
@@ -110,7 +117,7 @@ class WarningController extends Controller
     {
         $employees = Employee::with('project')->orderBy('nik','asc')->get();
         $warning_categories = WarningCategory::orderBy('sp_name','asc')->get();
-        return view('warning.edit', compact('warning', 'employees', 'warning_categories'));
+        return view('warnings.edit', compact('warning', 'employees', 'warning_categories'));
     }
 
     /**
@@ -146,7 +153,7 @@ class WarningController extends Controller
             'sp_date' => $request->sp_date,
         ]);
 
-        return redirect('warning')->with('status', 'Warning updated successfully');
+        return redirect('warnings')->with('status', 'Warning updated successfully');
     }
 
     /**
@@ -166,7 +173,7 @@ class WarningController extends Controller
         // cara 3
         // Warning::where('id', $warning->id)->delete();
 
-        return redirect('warning')->with('status', 'Warning deleted successfully');
+        return redirect('warnings')->with('status', 'Warning deleted successfully');
     }
 
     public function trash()
@@ -175,7 +182,7 @@ class WarningController extends Controller
         $warnings = Warning::onlyTrashed()->with('employee.project')->orderBy('id','desc')->get();
 
         // return $warnings;
-        return view('warning.trash', compact('warnings'));
+        return view('warnings.trash', compact('warnings'));
     }
 
     public function restore($id = null)
@@ -186,7 +193,7 @@ class WarningController extends Controller
             $warnings = Warning::onlyTrashed()->restore();
         }
 
-        return redirect('warning/trash')->with('status', 'Warning restored successfully');
+        return redirect('warnings/trash')->with('status', 'Warning restored successfully');
     }
     
     public function delete($id = null)
@@ -197,6 +204,32 @@ class WarningController extends Controller
             $warnings = Warning::onlyTrashed()->forceDelete();
         }
 
-        return redirect('warning/trash')->with('status', 'Warning deleted permanently');
+        return redirect('warnings/trash')->with('status', 'Warning deleted permanently');
+    }
+
+    public function index_data()
+    {
+        $warnings = Warning::with('employee.project')->latest()->get();
+
+        return datatables()->of($warnings)
+            ->addIndexColumn()
+            ->addColumn('nik', function($warnings){
+                return $warnings->employee->nik;
+            })
+            ->addColumn('employee_name', function($warnings){
+                return $warnings->employee->employee_name;
+            })
+            ->addColumn('code_project', function($warnings){
+                return $warnings->employee->project->code_project;
+            })
+            ->addColumn('sp_name', function($warnings){
+                return $warnings->warning_category->sp_name;
+            })
+            ->addColumn('sp_date', function($warnings){
+                return $warnings->sp_date;
+            })
+            ->addColumn('action', 'warnings.action')
+            ->rawColumns(['action'])
+            ->toJson();
     }
 }

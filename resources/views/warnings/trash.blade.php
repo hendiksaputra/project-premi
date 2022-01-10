@@ -15,7 +15,7 @@
       <div class="page-header float-right">
         <div class="page-title">
           <ol class="breadcrumb text-right">
-            <li class="active"><i class="fa fa-dashboard"></i></li>
+            <li class="active"><i class="fa fa-warning"></i></li>
           </ol>
         </div>
       </div>
@@ -37,14 +37,14 @@
             <strong>Deleted Warning List</strong>
           </div>
           <div class="pull-right">
-            <a href="{{ url('warning/delete') }}" class="btn btn-danger btn-sm"
+            <a href="{{ url('warnings/delete') }}" class="btn btn-danger btn-sm"
               onclick="return confirm('Are you sure want to delete all data?')">
               <i class="fa fa-trash"></i> Delete All
             </a>
-            <a href="{{ url('warning/restore') }}" class="btn btn-info btn-sm">
+            <a href="{{ url('warnings/restore') }}" class="btn btn-info btn-sm">
               <i class="fa fa-plus"></i> Restore
             </a>
-            <a href="{{ url('warning') }}" class="btn btn-success btn-sm">
+            <a href="{{ url('warnings') }}" class="btn btn-success btn-sm">
               <i class="fa fa-undo"></i> Back
             </a>
           </div>
@@ -74,10 +74,10 @@
                   <td>{{ $item->warning_category->sp_name }}</td>
                   <td>{{ $item->sp_date }}</td>
                   <td class="text-center">
-                    <a href="{{ url('warning/restore/' . $item->id) }}" class="btn btn-info btn-sm">
+                    <a href="{{ url('warnings/restore/' . $item->id) }}" class="btn btn-info btn-sm">
                       Restore
                     </a>
-                    <a href="{{ url('warning/delete/' . $item->id) }}" class="btn btn-danger btn-sm"
+                    <a href="{{ url('warnings/delete/' . $item->id) }}" class="btn btn-danger btn-sm"
                       onclick="return confirm('Are you sure want to delete this data?')">
                       Delete
                     </a>

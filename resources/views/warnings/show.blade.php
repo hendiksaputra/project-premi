@@ -15,7 +15,7 @@
       <div class="page-header float-right">
         <div class="page-title">
           <ol class="breadcrumb text-right">
-            <li class="active"><i class="fa fa-dashboard"></i></li>
+            <li class="active"><i class="fa fa-warning"></i></li>
           </ol>
         </div>
       </div>
@@ -33,7 +33,7 @@
             <strong>Warning Detail</strong>
           </div>
           <div class="pull-right">
-            <a href="{{ url('warning') }}" class="btn btn-success btn-sm">
+            <a href="{{ url('warnings') }}" class="btn btn-success btn-sm">
               <i class="fa fa-undo"></i> Back
             </a>
           </div>

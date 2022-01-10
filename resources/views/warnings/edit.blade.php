@@ -15,7 +15,7 @@
       <div class="page-header float-right">
         <div class="page-title">
           <ol class="breadcrumb text-right">
-            <li class="active"><i class="fa fa-dashboard"></i></li>
+            <li class="active"><i class="fa fa-warning"></i></li>
           </ol>
         </div>
       </div>
@@ -29,10 +29,10 @@
       <div class="card">
         <div class="card-header">
           <div class="pull-left">
-            <strong>Add Warning Data</strong>
+            <strong>Edit Warning Data</strong>
           </div>
           <div class="pull-right">
-            <a href="{{ url('warning') }}" class="btn btn-success btn-sm">
+            <a href="{{ url('warnings') }}" class="btn btn-success btn-sm">
               <i class="fa fa-undo"></i> Back
             </a>
           </div>
@@ -40,7 +40,8 @@
         <div class="card-body">
           <div class="row">
             <div class="col-md-8">
-              <form action="{{ url('warning') }}" method="post">
+              <form action="{{ url('warnings/' . $warning->id) }}" method="post">
+                @method('PUT')
                 @csrf
                 <div class="form-group">
                   <label for="">Employee Name</label>
@@ -49,7 +50,8 @@
                     autofocus>
                     <option value=""></option>
                     @foreach ($employees as $item)
-                      <option value="{{ $item->id }}" {{ old('employee_id') == $item->id ? 'selected' : null }}>
+                      <option value="{{ $item->id }}"
+                        {{ old('employee_id', $warning->employee_id) == $item->id ? 'selected' : null }}>
                         {{ $item->nik }} -
                         {{ $item->employee_name }}</option>
                     @endforeach
@@ -69,8 +71,9 @@
                     name="warning_category_id">
                     <option value=""></option>
                     @foreach ($warning_categories as $item)
-                      <option value="{{ old('warning_category_id', $item->id) }}"
-                        {{ old('warning_category_id') == $item->id ? 'selected' : null }}>{{ $item->sp_name }}
+                      <option value="{{ $item->id }}"
+                        {{ old('warning_category_id', $warning->warning_category_id) == $item->id ? 'selected' : null }}>
+                        {{ $item->sp_name }}
                       </option>
                     @endforeach
                   </select>
@@ -81,7 +84,7 @@
                 <div class=" form-group">
                   <label for="">Date</label>
                   <input type="date" name="sp_date" class="form-control @error('sp_date') is-invalid @enderror"
-                    value="{{ old('sp_date') }}">
+                    value="{{ old('sp_date', $warning->sp_date) }}">
                   @error('sp_date')
                     <div class="text-danger">{{ $message }}</div>
                   @enderror

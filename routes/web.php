@@ -46,7 +46,8 @@ Route::get('warning_categories/edit/{id}', [WarningCategoryController::class, 'e
 Route::patch('warning_categories/{id}', [WarningCategoryController::class, 'editProcess']);
 Route::delete('warning_categories/{id}', [WarningCategoryController::class, 'delete']);
 
-Route::get('warning/trash', [WarningController::class, 'trash']);
-Route::get('warning/restore/{id?}', [WarningController::class, 'restore']);
-Route::get('warning/delete/{id?}', [WarningController::class, 'delete']);
-Route::resource('warning', 'WarningController');
+Route::get('warnings/data', [WarningController::class, 'index_data'])->name('warnings.index.data');
+Route::get('warnings/trash', [WarningController::class, 'trash']);
+Route::get('warnings/restore/{id?}', [WarningController::class, 'restore']);
+Route::get('warnings/delete/{id?}', [WarningController::class, 'delete']);
+Route::resource('warnings', 'WarningController');

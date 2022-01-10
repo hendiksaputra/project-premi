@@ -16,7 +16,7 @@
         <div class="page-title">
           <ol class="breadcrumb text-right">
 
-            <li class="active"><i class="fa fa-dashboard"></i></li>
+            <li class="active"><i class="fa fa-building"></i></li>
           </ol>
         </div>
       </div>

@@ -15,7 +15,7 @@
       <div class="page-header float-right">
         <div class="page-title">
           <ol class="breadcrumb text-right">
-            <li class="active"><i class="fa fa-dashboard"></i></li>
+            <li class="active"><i class="fa fa-warning"></i></li>
           </ol>
         </div>
       </div>
@@ -37,35 +37,33 @@
             <strong>Data Warning List</strong>
           </div>
           <div class="pull-right">
-            <a href="{{ url('warning/trash') }}" class="btn btn-danger btn-sm">
+            <a href="{{ url('warnings/trash') }}" class="btn btn-danger btn-sm">
               <i class="fa fa-trash"></i> Trash
             </a>
-            <a href="{{ url('warning/create') }}" class="btn btn-success btn-sm">
+            <a href="{{ url('warnings/create') }}" class="btn btn-success btn-sm">
               <i class="fa fa-plus"></i> Add
             </a>
           </div>
         </div>
         <div class="card-body table-responsive">
-          <table id="bootstrap-data-table" class="table table-striped table-bordered">
+          <table id="warnings-table" class="table table-striped table-bordered" width=100%>
             <thead>
               <tr>
                 <th width="5%">No</th>
                 <th>NIK</th>
                 <th>Employee</th>
-                {{-- <th>Position</th> --}}
                 <th>Project</th>
                 <th>Warning</th>
                 <th>Date</th>
                 <th width="15%" class="text-center">Action</th>
               </tr>
             </thead>
-            <tbody>
+            {{-- <tbody>
               @foreach ($warnings as $item)
                 <tr>
                   <td>{{ $loop->iteration }}</td>
                   <td>{{ $item->employee->nik }}</td>
                   <td>{{ $item->employee->employee_name }}</td>
-                  {{-- <td>{{ $item->position }}</td> --}}
                   <td>{{ $item->employee->project->code_project }}</td>
                   <td>{{ $item->warning_category->sp_name }}</td>
                   <td>{{ $item->sp_date }}</td>
@@ -86,11 +84,49 @@
                     </form>
                   </td>
                 </tr>
-              @endforeach
-            </tbody>
+                @endforeach
+              </tbody> --}}
           </table>
         </div>
       </div>
     </div>
   </div>
+
+  <script src="{{ asset('style/assets/js/lib/data-table/datatables.min.js') }}"></script>
+  <script>
+    $(function() {
+      $("#warnings-table").DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: '{{ route('warnings.index.data') }}',
+        columns: [{
+            data: 'DT_RowIndex',
+            orderable: false,
+            searchable: false
+          },
+          {
+            data: 'nik'
+          },
+          {
+            data: 'employee_name'
+          },
+          {
+            data: 'code_project'
+          },
+          {
+            data: 'sp_name'
+          },
+          {
+            data: 'sp_date'
+          },
+          {
+            data: 'action',
+            orderable: false,
+            searchable: false
+          },
+        ],
+        fixedHeader: true,
+      })
+    });
+  </script>
 @endsection
